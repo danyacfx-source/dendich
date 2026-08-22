@@ -30,6 +30,7 @@
   }
   .card .value { font-size: 16px; line-height: 1.4; }
   .viewers { font-size: 36px; font-weight: 800; color: #9146ff; }
+  .uptime { font-size: 20px; font-weight: 600; color: #a7a9be; margin-top: 4px; }
   .dot { display:inline-block; width:10px; height:10px; background:#ff0000; border-radius:50%; margin-right:6px; animation:pulse 1.5s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
   .song-current { font-size:14px; color:#1db954; margin-bottom:4px; }
@@ -64,7 +65,15 @@ async function load() {
 
     if (d.stream && d.stream.live) {
       h += '<div class="card"><h3><span class="dot"></span>Зрители</h3>';
-      h += '<div class="viewers">' + (d.stream.viewers || 0) + '</div></div>';
+      h += '<div class="viewers">' + (d.stream.viewers || 0) + '</div>';
+      if (d.stream.started_at) {
+        var elapsed = Math.floor((Date.now() / 1000) - Date.parse(d.stream.started_at) / 1000);
+        var h2 = Math.floor(elapsed / 3600);
+        var m2 = Math.floor((elapsed % 3600) / 60);
+        var s2 = elapsed % 60;
+        h += '<div class="uptime">' + (h2 > 0 ? h2 + 'ч ' : '') + (m2 < 10 ? '0' : '') + m2 + ':' + (s2 < 10 ? '0' : '') + s2 + '</div>';
+      }
+      h += '</div>';
     } else {
       h += '<div class="card"><h3>Статус</h3><div class="value">⚪ Офлайн</div></div>';
     }
