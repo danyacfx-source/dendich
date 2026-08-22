@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Tarkov Overlay</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: transparent;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #fff;
+    width: 420px;
+    overflow: hidden;
+  }
+  .card {
+    background: rgba(20, 22, 31, 0.85);
+    border-left: 4px solid #9146ff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.5);
+    backdrop-filter: blur(6px);
+  }
+  .card h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a7a9be;
+    margin-bottom: 6px;
+  }
+  .card .value { font-size: 16px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+  .counters { font-size:14px; line-height:1.6; }
+  .counters b { color:#f1c40f; }
+  .raid-timer { font-size:34px; font-weight:800; letter-spacing:2px; }
+  .raid-ok { color:#2ecc71; }
+  .raid-bad { color:#e74c3c; }
+  .raid-run { color:#f1c40f; }
+  .raid-stats { font-size:13px; color:#a7a9be; margin-top:4px; }
+  .song-current { font-size:15px; color:#1db954; margin-bottom:6px; }
+  .song-queue { font-size:13px; color:#a7a9be; }
+  .song-queue div { margin-bottom:2px; }
+  .song-note { font-size:12px; color:#6a6c82; margin-top:4px; }
+  .prestream { text-align:center; }
+  .prestream-timer { font-size:42px; font-weight:800; letter-spacing:2px; color:#9146ff; margin:6px 0; }
+  .prestream-label { font-size:15px; color:#a7a9be; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+<script>
+var API = 'http://127.0.0.1:8765/overlay/api';
+var PRESTREAM_MIN = 5;
+
+async function load() {
+  try {
+    var r = await fetch(API);
+    var d = await r.json();
+    var h = '';
+
+    if (d.stream && d.stream.live && d.stream.started_at) {
+      var elapsed = (Date.now() / 1000) - Date.parse(d.stream.started_at) / 1000;
+      var remain = PRESTREAM_MIN * 60 - elapsed;
+      if (remain > 0) {
+        window._prestreamEnd = Date.parse(d.stream.started_at) / 1000 + PRESTREAM_MIN * 60;
+        h += '<div class="card prestream"><h3>🎬 Стрим скоро начнётся</h3>';
+        h += '<div class="prestream-timer" id="prestreamTimer">--:--</div>';
+        h += '<div class="prestream-label">приносим покой и уют</div></div>';
+      }
+    }
+
+    if (d.map) {
+      h += '<div class="card"><h3>🎒 Рандом</h3><div class="value">' + esc(d.map) + '</div></div>';
+    }
+    if (d.quest) {
+      h += '<div class="card"><h3>🗺️ Квест</h3><div class="value">' + esc(d.quest) + '</div></div>';
+    }
+    if (d.counters && d.counters.length) {
+      h += '<div class="card"><h3>📦 Лут / счётчики</h3><div class="counters">';
+      for (var i = 0; i < d.counters.length; i++) {
+        h += '<div><b>' + esc(d.counters[i].name) + '</b>: ' + d.counters[i].value + '</div>';
+      }
+      h += '</div></div>';
+    }
+    if (d.raid) {
+      h += '<div class="card"><h3>🎮 Рейд</h3>';
+      h += '<div class="raid-stats">Всего рейдов: <b>' + (d.raid.total_raids || 0) + '</b>';
+      if (d.raid.last_map) h += ' · Последняя: ' + esc(d.raid.last_map);
+      h += '</div>';
+      if (d.raid.status === 'raid') {
+        h += '<div class="raid-timer raid-run" id="raidTimer">--:--</div>';
+        h += '<div class="raid-stats">Серия: <b>' + d.raid.streak + '</b> · Рекорд: ' + d.raid.best_streak + '</div>';
+        window._raidStart = d.raid.started_at;
+      } else if (d.raid.status === 'extract') {
+        h += '<div class="raid-timer raid-ok">✅ Выжил</div>';
+        h += '<div class="raid-stats">Серия: <b>' + d.raid.streak + '</b> · Рекорд: ' + d.raid.best_streak + '</div>';
+      } else if (d.raid.status === 'dead') {
+        h += '<div class="raid-timer raid-bad">💀 Умер</div>';
+        h += '<div class="raid-stats">Рекорд: ' + d.raid.best_streak + '</div>';
+      } else {
+        h += '<div class="raid-stats">Нет активного рейда</div>';
+      }
+      h += '</div>';
+    }
+
+    if (d.song && (d.song.current || (d.song.queue && d.song.queue.length))) {
+      h += '<div class="card"><h3>🎵 Музыка</h3>';
+      if (d.song.current) {
+        h += '<div class="song-current">▶️ ' + esc(d.song.current.title) + '</div>';
+        h += '<div class="song-note">заказал: ' + esc(d.song.current.requester) + '</div>';
+      }
+      if (d.song.queue && d.song.queue.length) {
+        h += '<div class="song-queue">';
+        for (var j = 0; j < d.song.queue.length; j++) {
+          h += '<div>' + (j+1) + '. ' + esc(d.song.queue[j].title) + ' (' + esc(d.song.queue[j].requester) + ')</div>';
+        }
+        if (d.song.total > 5) h += '<div>... и ещё ' + (d.song.total - 5) + '</div>';
+        h += '</div>';
+      }
+      h += '</div>';
+    }
+
+    document.getElementById('root').innerHTML = h;
+  } catch (e) { /* ignore */ }
+}
+
+function esc(s) {
+  var d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+load();
+setInterval(load, 4000);
+setInterval(function () {
+  var el = document.getElementById('raidTimer');
+  if (!el || !window._raidStart) return;
+  var s = Math.floor((Date.now() / 1000) - window._raidStart);
+  if (s < 0) s = 0;
+  var m = Math.floor(s / 60);
+  var sec = s % 60;
+  el.textContent = (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+}, 1000);
+setInterval(function () {
+  var el = document.getElementById('prestreamTimer');
+  if (!el || !window._prestreamEnd) return;
+  var remain = Math.floor(window._prestreamEnd - Date.now() / 1000);
+  if (remain <= 0) { el.parentElement.style.display = 'none'; return; }
+  var m = Math.floor(remain / 60);
+  var sec = remain % 60;
+  el.textContent = (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+}, 1000);
+</script>
+</body>
+</html>
