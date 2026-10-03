@@ -22,27 +22,27 @@ body{min-height:100vh;display:flex;align-items:center;justify-content:center;bac
 .container{max-width:420px;width:100%;padding:40px 20px;text-align:center}
 .avatar{width:120px;height:120px;border-radius:50%;border:3px solid #ff0000;margin:0 auto 20px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover}
-h1{font-size:28px;margin-bottom:6px;font-weight:700}
+h1{font-size:28px;margin-bottom:6px;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,0.7)}
 .sub{color:#fff;font-size:15px;margin-bottom:36px;text-shadow:0 1px 6px rgba(0,0,0,0.8);font-weight:500}
 .links{display:flex;flex-direction:column;gap:14px}
-.link{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:12px;text-decoration:none;color:#fff;font-size:16px;font-weight:600;transition:all .2s;cursor:pointer;border:1px solid rgba(255,255,255,0.08)}
+.link{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:12px;text-decoration:none;color:#fff;font-size:16px;font-weight:600;transition:all .2s;cursor:pointer;border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 14px rgba(0,0,0,0.35);text-shadow:0 1px 3px rgba(0,0,0,0.45)}
 .link:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
-.link svg{width:28px;height:28px;flex-shrink:0}
+.link svg{width:30px;height:30px;flex-shrink:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4))}
 .link .label{text-align:left;flex:1}
-.link .desc{font-size:12px;font-weight:400;color:#aaa;margin-top:2px}
-.kick{background:linear-gradient(135deg,#00e471 0%,#00a857 100%)}
-.kick:hover{background:linear-gradient(135deg,#22ff8a 0%,#00c96a 100%)}
+.link .desc{font-size:12px;font-weight:400;color:rgba(255,255,255,0.95);margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,0.55)}
+.kick{background:linear-gradient(135deg,#00b865 0%,#00844a 100%)}
+.kick:hover{background:linear-gradient(135deg,#00cf72 0%,#009654 100%)}
 .youtube{background:linear-gradient(135deg,#ff0000 0%,#cc0000 100%)}
 .youtube:hover{background:linear-gradient(135deg,#ff3333 0%,#e60000 100%)}
 .discord{background:linear-gradient(135deg,#5865f2 0%,#4752c4 100%)}
 .discord:hover{background:linear-gradient(135deg,#7289fa 0%,#5b6ebf 100%)}
-.donate{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
-.donate:hover{background:linear-gradient(135deg,#f5a0fc 0%,#ff6b81 100%)}
-.clan{background:linear-gradient(135deg,#00b09b 0%,#96c93d 100%)}
-.clan:hover{background:linear-gradient(135deg,#00d4a7 0%,#aee64b 100%)}
+.donate{background:linear-gradient(135deg,#e64980 0%,#b5179e 100%)}
+.donate:hover{background:linear-gradient(135deg,#f06595 0%,#c2255c 100%)}
+.clan{background:linear-gradient(135deg,#00a28a 0%,#5a9e10 100%)}
+.clan:hover{background:linear-gradient(135deg,#00b89c 0%,#6cb41a 100%)}
 .wardogs{background:linear-gradient(135deg,#ff6a00 0%,#ee0979 100%)}
 .wardogs:hover{background:linear-gradient(135deg,#ffa34d 0%,#ff4d9d 100%)}
-.footer{margin-top:40px;color:#444;font-size:12px}
+.footer{margin-top:40px;color:rgba(255,255,255,0.45);font-size:12px}
 </style>
 </head>
 <body>
@@ -52,7 +52,7 @@ h1{font-size:28px;margin-bottom:6px;font-weight:700}
   <p class="sub">Стример · Контент-мейкер</p>
   <div class="links">
     <a href="https://kick.com/dendosich" target="_blank" class="link kick">
-      <svg viewBox="0 0 24 24" fill="#fff"><path d="M1 0v24h2.75V15h4.89L11.75 21h3.85v-6h1.62L21 21h2v-2.35l-2.61-4.02c-.16-.21-.16-.53 0-.74L23 9.86V8.5h-2l-3.39 4.17h-1.62V8.5h-3.1l-3.15 4.5H3.75V0H1zm3.75 2.75h3.87l3.42 6.75h1.74V2.75h3.85v9.89h4.6l2.98 3.26V12h-2l-2.18-2.75h2.18V5.55H12.38v1.5h1.74v2.05h-1.58l-3.2-4.2H7.88v3.37h-2.13V2.75z"/></svg>
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M1.333 0h8v5.333H12V2.667h2.667V0h8v8H20v2.667h-2.667v2.666H20V16h2.667v8h-8v-2.667H12v-2.666H9.333V24h-8Z"/></svg>
       <div class="label">Kick<div class="desc">Стримы в прямом эфире</div></div>
     </a>
     <a href="https://www.youtube.com/@Dendosich" target="_blank" class="link youtube">
@@ -64,15 +64,15 @@ h1{font-size:28px;margin-bottom:6px;font-weight:700}
       <div class="label">Discord<div class="desc">Наше комьюнити</div></div>
     </a>
     <a href="https://discord.gg/oco-team" target="_blank" class="link clan">
-      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
       <div class="label">Наше клан комьюнити<div class="desc">Присоединяйся к клану</div></div>
     </a>
-<a href="https://discord.gg/rubezh" target="_blank" class="link wardogs">
-      <svg viewBox="0 0 24 24" fill="#fff"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg>
+    <a href="https://discord.gg/rubezh" target="_blank" class="link wardogs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
       <div class="label">Наш Сервер по Wardogs<div class="desc">WARDOGS рубеж · Присоединяйся</div></div>
     </a>
     <a href="https://www.donationalerts.com/r/dendich" target="_blank" class="link donate">
-      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
       <div class="label">Поддержать<div class="desc">Донаты и поддержка</div></div>
     </a>
   </div>
